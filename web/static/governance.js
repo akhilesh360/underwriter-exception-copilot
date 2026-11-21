@@ -221,7 +221,7 @@
     var nTrig = Object.keys(triggered).length;
 
     var h = sectionHead('Underwriting playbook',
-      '<span class="gov-tag">Synthetic demonstration playbook — not Indigo\'s underwriting manual</span>',
+      '<span class="gov-tag">Synthetic demonstration playbook — not a real carrier\'s underwriting manual</span>',
       '<div class="gov-ver"><span class="muted gov-small">Playbook version</span><span class="gov-ver-n">v' + esc(pb.playbook_version || '—') + '</span></div>');
     h += '<div class="gov-callout gov-callout-soft"><div class="gov-callout-icon">★</div><div>' +
       (nTrig ? '<strong>' + nTrig + ' rule' + (nTrig > 1 ? 's' : '') + ' triggered</strong> by <b>' + esc(gs.caseId) + '</b> are highlighted.' :

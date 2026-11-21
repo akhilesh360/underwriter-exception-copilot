@@ -1,6 +1,23 @@
-# Underwriter Exception Copilot (UEC)
+# Underwriter Exception Copilot: evidence-backed briefs for flagged MPL submissions, with the human in charge
 
-A prototype that helps a medical professional liability (MPL) underwriter work through **exceptions** that deterministic rules have already flagged. For each one it builds an evidence-backed brief with citations, applies a versioned playbook to decide which actions are allowed, records the human decision, and writes an append-only audit trail.
+<!-- DEMO_VIDEO -->
+**▶ [2-minute demo](docs/demo.mp4)** (real app screens, captioned): architecture, rule detection, a live Copilot AI brief, citation verification, the playbook gate and backend 403, the human decision, a prompt-injection case, evals and the audit trail.
+
+## How it works
+
+![Flow](docs/flow.png)
+
+![Architecture](docs/architecture.png)
+
+| Result | Value |
+|---|---|
+| Main case `SUB-1042` | Rule flags `CLAIM_MISMATCH`: application says "no prior claims", external record shows a **$185,000** 2021 claim |
+| Evidence completeness | **4 of 6** required items, computed by code, not the model |
+| Live brief | Schema-valid and **Validated**: every quote checked against its source span, in about 3–5 s |
+| Playbook gate | APPROVE / DECLINE return **403** from the backend under `MPL-DEMO-002`, even when the UI is bypassed |
+| Prompt injection in a broker note | Raw output picked it up in 25–50% of live runs; the validator removed it **every time** |
+| Offline evals | **8 / 8** scenarios, all 9 validated gates at 100% (cached and live) |
+| Tests | **23 / 23** pass |
 
 > **Synthetic demonstration only.** Every physician, claim, document and playbook rule here is made up. This is not production-certified software and it is not anyone's real underwriting manual.
 

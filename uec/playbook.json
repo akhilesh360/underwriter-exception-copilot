@@ -1,4 +1,4 @@
-{"playbook_version": "1.0", "label": "Synthetic demonstration playbook - not Indigo's manual", "rules": [
+{"playbook_version": "1.0", "label": "Synthetic demonstration playbook - not a real carrier's underwriting manual", "rules": [
  {"rule_id": "MPL-DEMO-001", "version": "1.0", "jurisdiction": "DEMO", "effective_date": "2026-01-01", "trigger": "MISSING_LOSS_HISTORY",
   "title": "Missing loss history: request documentation", "required_evidence": ["submitted_loss_history"],
   "permitted_actions": ["REQUEST_INFORMATION", "REFER"], "final_decision_allowed": false, "human_review_required": true, "escalation_required": false, "required_role": null},
