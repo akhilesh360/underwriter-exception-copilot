@@ -48,8 +48,8 @@ SCENES = [
     ("gate", "PLAYBOOK GATE", "Approve and Decline are locked",
      "Playbook rule MPL-DEMO-002 does not allow a final decision while the claim mismatch is unresolved. "
      "The reason is shown on each locked action.", 1.1),
-    ("b403", "BACKEND GATE", "Bypassing the UI still returns 403",
-     "An APPROVE sent straight to the API is refused by the backend policy engine. The block itself is written to the audit log.", 1.1),
+    ("b403", "BACKEND GATE", "Expected 403 Forbidden: the server refuses it",
+     "Intentional, not a bug: this POSTs APPROVE straight to /api/cases/SUB-1042/decision, skipping the UI. The policy engine finds MPL-DEMO-002 forbids a final decision while claim identity is unverified, so it returns HTTP 403 and logs ACTION_BLOCKED.", 1.1),
     ("decide", "HUMAN DECISION", "The underwriter decides, with a rationale",
      "Request information is allowed by the playbook. The rationale is required and is recorded with the rule versions shown at decision time.", 1.7),
     ("edit", "HUMAN EDIT", "Edits create a new version",
