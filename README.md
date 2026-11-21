@@ -310,3 +310,7 @@ JSON schema (output must validate against it; no extra fields):
 
 Allowed next_steps actions: APPROVE, DECLINE, REQUEST_INFORMATION, REFER, ESCALATE. Only use actions permitted by the applicable rules listed in the user message.
 ```
+
+## License
+
+[MIT](LICENSE)
