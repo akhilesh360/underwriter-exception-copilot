@@ -1,6 +1,6 @@
 {
   "raw_text": "{\"submission_id\": \"SUB-1043\", \"known\": [{\"fact\": \"Submitted loss history reports one claim, CLM-DEMO-3310, in 2019, closed without payment.\", \"evidence_ids\": [\"DOC-11-P2\"], \"quote\": \"One claim, CLM-DEMO-3310, 2019, closed without payment.\"}, {\"fact\": \"External claims record shows CLM-DEMO-3310 in 2019 with indemnity paid $0, status CLOSED, consistent with the reported claim.\", \"evidence_ids\": [\"DOC-12-P1\"], \"quote\": \"Claim CLM-DEMO-3310: year 2019, indemnity paid $0, status CLOSED\"}, {\"fact\": \"License status is ACTIVE.\", \"evidence_ids\": [\"DOC-13-P1\"], \"quote\": \"License state DS, status ACTIVE\"}], \"conflicts\": [], \"missing\": [], \"next_steps\": [], \"human_review_required\": true}",
-  "model_version": "deepseek-chat (seed fixture)",
+  "model_version": "copilot-ai (seed fixture)",
   "prompt_version": "brief-v1.0",
   "cached_at": "2026-11-20T12:00:00+00:00"
 }

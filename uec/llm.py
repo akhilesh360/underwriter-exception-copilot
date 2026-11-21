@@ -1,4 +1,4 @@
-"""LLM brief generation (DeepSeek via OpenAI SDK) with an offline cache fallback.
+"""LLM brief generation (any OpenAI-compatible endpoint) with an offline cache fallback.
 
 Cached results always report mode "cached" and their original model_version.
 """
@@ -12,7 +12,21 @@ from .models import Action, LLMBrief
 
 PROMPT_VERSION = "brief-v1.0"
 CACHE_DIR = Path(__file__).resolve().parent.parent / "cache"
-BASE_URL = "https://api.deepseek.com"
+_DEFAULT_BASE_URL = "https://api.deepseek.com"
+_DEFAULT_MODEL = "deepseek-chat"
+
+
+def _env(name: str, legacy: str, default: str | None = None) -> str | None:
+    """Vendor-neutral LLM_* settings; the legacy provider-specific names still work."""
+    return os.environ.get(name) or os.environ.get(legacy) or default
+
+
+def base_url() -> str:
+    return _env("LLM_BASE_URL", "DEEPSEEK_BASE_URL", _DEFAULT_BASE_URL)
+
+
+def _api_key() -> str | None:
+    return _env("LLM_API_KEY", "DEEPSEEK_API_KEY")
 
 _BASE_PROMPT = """You are drafting an evidence-backed exception brief for a human underwriter.
 
@@ -38,11 +52,11 @@ SYSTEM_PROMPT = (
 
 
 def model_name() -> str:
-    return os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+    return _env("LLM_MODEL", "DEEPSEEK_MODEL", _DEFAULT_MODEL)
 
 
 def llm_available() -> bool:
-    return bool(os.environ.get("DEEPSEEK_API_KEY"))
+    return bool(_api_key())
 
 
 def _now() -> str:
@@ -101,7 +115,7 @@ def _load_cached(sid: str, note: str) -> dict:
 
 def _call_live(messages: list[dict]) -> str:
     from openai import OpenAI
-    client = OpenAI(api_key=os.environ["DEEPSEEK_API_KEY"], base_url=BASE_URL)
+    client = OpenAI(api_key=_api_key(), base_url=base_url())
     resp = client.chat.completions.create(model=model_name(), messages=messages, temperature=0,
                                           response_format={"type": "json_object"})
     return resp.choices[0].message.content or ""
@@ -113,10 +127,10 @@ def generate(bundle: dict, exceptions: list[dict], rules: list[dict], mode: str 
     if mode not in ("auto", "live", "cached"):
         raise ValueError(f"unknown mode {mode!r}")
     if mode == "cached" or (mode == "auto" and not llm_available()):
-        why = "requested cached mode" if mode == "cached" else "no DEEPSEEK_API_KEY set"
+        why = "requested cached mode" if mode == "cached" else "no LLM_API_KEY set"
         return _load_cached(sid, f"Cached output ({why}); not a fresh model call.")
     if not llm_available():
-        raise RuntimeError("Live mode requested but DEEPSEEK_API_KEY is not set")
+        raise RuntimeError("Live mode requested but LLM_API_KEY is not set")
     try:
         raw = _call_live(build_messages(bundle, exceptions, rules, feedback))
     except Exception as e:  # network/API failure

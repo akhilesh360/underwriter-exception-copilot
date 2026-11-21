@@ -36,7 +36,7 @@ def test_edit_brief_of_other_submission_404():
 
 
 def test_live_api_failure_is_503(monkeypatch):
-    monkeypatch.setenv("DEEPSEEK_API_KEY", "k")
+    monkeypatch.setenv("LLM_API_KEY", "k")
     def boom(_):
         raise ConnectionError("down")
     monkeypatch.setattr(llm, "_call_live", boom)

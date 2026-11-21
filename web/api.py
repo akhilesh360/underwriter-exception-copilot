@@ -27,6 +27,17 @@ def conn():
     return _conn
 
 
+AI_LABEL = "Copilot AI"
+
+
+def _neutral(obj):
+    """Vendor-neutral responses: the configured model id is stored for audit but shown as a product label."""
+    text = json.dumps(obj, default=str)
+    for name in {llm.model_name()} | {m for m in os.environ.get("LLM_MODEL_ALIASES", "").split(",") if m}:
+        text = text.replace(name, AI_LABEL)
+    return json.loads(text)
+
+
 def _check_role(role):
     if role not in ROLES:
         raise HTTPException(422, f"Unknown reviewer role; expected one of {sorted(ROLES)}")
@@ -54,7 +65,7 @@ class EvalReq(BaseModel):
 @app.get("/api/status")
 def status():
     pb = policy.load_playbook()
-    return {"llm_available": llm.llm_available(), "model": os.environ.get("DEEPSEEK_MODEL", "deepseek-chat"),
+    return {"llm_available": llm.llm_available(), "model": "Copilot AI",
             "prompt_version": llm.PROMPT_VERSION, "playbook_version": pb.get("playbook_version"),
             "playbook_label": pb.get("label"), "data": "100% synthetic"}
 
@@ -70,7 +81,7 @@ def case(sid: str, role: str = "underwriter"):
     _check_role(role)
     with _lock:
         try:
-            return json.loads(json.dumps(service.open_case(conn(), sid, role), default=str))
+            return _neutral(service.open_case(conn(), sid, role))
         except KeyError:
             raise HTTPException(404, f"Unknown submission {sid}")
 
@@ -81,7 +92,7 @@ def brief(sid: str, req: BriefReq):
         raise HTTPException(422, "mode must be auto|live|cached")
     with _lock:
         try:
-            return service.generate_brief(conn(), sid, mode=req.mode)
+            return _neutral(service.generate_brief(conn(), sid, mode=req.mode))
         except KeyError:
             raise HTTPException(404, f"Unknown submission {sid}")
         except (RuntimeError, FileNotFoundError) as e:
@@ -129,7 +140,7 @@ def evals_latest():
             return {"run": None, "results": [], "history": []}
         res = [dict(r) for r in c.execute("SELECT * FROM evaluation_results WHERE run_id=?", (run["run_id"],))]
         hist = [dict(r) for r in c.execute("SELECT * FROM evaluation_runs ORDER BY run_id DESC LIMIT 10")]
-        return {"run": dict(run), "results": res, "history": hist}
+        return _neutral({"run": dict(run), "results": res, "history": hist})
 
 
 @app.post("/api/evals/run")
@@ -137,7 +148,7 @@ def evals_run(req: EvalReq):
     from evals import run_evals
     with _lock:
         out = run_evals.run(req.mode, db.DB_PATH, verbose=False)
-    return json.loads(json.dumps(out, default=str))
+    return _neutral(out)
 
 
 @app.get("/")

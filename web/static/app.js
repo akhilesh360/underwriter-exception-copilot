@@ -3,9 +3,7 @@
   "use strict";
 
   const $ = (s, r = document) => r.querySelector(s);
-  // Vendor-neutral display: the underlying model id stays in the DB/audit, the UI shows a product label.
-  const AI_LABEL = "Copilot AI";
-  const esc = (s) => String(s == null ? "" : s).replace(/deepseek[\w.-]*/gi, AI_LABEL).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   async function api(path, opts = {}) {
     const init = { method: opts.method || (opts.body !== undefined ? "POST" : "GET"), headers: {} };

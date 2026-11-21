@@ -17,7 +17,7 @@ A prototype that helps a medical professional liability (MPL) underwriter work t
 
 1. **Rules detect** (`uec/detector.py`): deterministic reason codes such as `CLAIM_MISMATCH`, `MISSING_LOSS_HISTORY`, `INCOMPLETE_PRACTICE_INFO`, `CREDENTIAL_GAP` and `MANDATORY_REVIEW`. An ambiguous identity match is marked *verification required*. It is never marked confirmed.
 2. **Retrieval** (`uec/retriever.py`): structured SQL builds an evidence bundle of documents and passages with page numbers and character offsets. It returns only what exists.
-3. **LLM synthesis** (`uec/llm.py`): DeepSeek, called through the OpenAI SDK, drafts a strict JSON brief (known / conflicts / missing / next_steps). Document text is wrapped and marked as untrusted data.
+3. **LLM synthesis** (`uec/llm.py`): an LLM behind an OpenAI-compatible API drafts a strict JSON brief (known / conflicts / missing / next_steps). Document text is wrapped and marked as untrusted data.
 4. **Runtime validator** (`uec/validator.py`): (A) schema, (B) citations (does the ID exist, do the offsets match, does the version match, is the quote a substring of the passage), (C) factual support (numbers and claim IDs must appear in the cited text), (D) policy (no final decisions, no pricing, no echoed injection). Items that fail are **dropped** and the reason is shown.
 5. **Playbook** (`uec/policy.py`, `uec/playbook.json`): versioned rules decide the permitted actions. The backend enforces them and rejects stale rule versions.
 6. **Human**: the reviewer edits the brief (stored as a new row, so the original is kept) and records a decision with a rationale.
@@ -34,7 +34,7 @@ A prototype that helps a medical professional liability (MPL) underwriter work t
 ## Run locally (one command)
 
 1. Install Python 3.11+ (https://www.python.org/downloads/).
-2. Copy `.env.example` to `.env` and paste your DeepSeek key (optional; without it the app uses clearly labelled cached briefs).
+2. Copy `.env.example` to `.env` and paste your LLM API key (optional; without it the app uses clearly labelled cached briefs).
 3. Start it:
    - macOS / Linux: `./run.sh`
    - Windows: double-click `run.bat`
@@ -45,7 +45,7 @@ The browser opens at http://localhost:8000.
 
 ```bash
 pip install -r requirements.txt
-export DEEPSEEK_API_KEY=...          # optional; without it the app uses the cached briefs
+export LLM_API_KEY=...               # optional; without it the app uses the cached briefs
 uvicorn web.api:app --port 8000   # then open http://localhost:8000
 python -m evals.run_evals            # --mode cached|live|auto  --db path
 pytest -q
@@ -55,8 +55,9 @@ pytest -q
 
 | Variable | Purpose | Default |
 |---|---|---|
-| `DEEPSEEK_API_KEY` | Turns on live generation | unset, so cached mode |
-| `DEEPSEEK_MODEL` | Model name | `deepseek-chat` |
+| `LLM_API_KEY` | Turns on live generation | unset, so cached mode |
+| `LLM_MODEL` | Model name (optional override) | provider default |
+| `LLM_BASE_URL` | OpenAI-compatible endpoint (optional override) | provider default |
 | `UEC_DB_PATH` | Path to the SQLite app DB | `./uec.db` |
 
 See `.env.example`.
