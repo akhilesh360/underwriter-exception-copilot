@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Underwriter Exception Copilot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/styles.css">
+<link rel="stylesheet" href="/static/governance.css">
+</head>
+<body>
+<div class="ribbon" role="note">Synthetic prototype · All data synthetic · Not production-certified · Not HIPAA/NAIC certified</div>
+<header class="topbar">
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="8" fill="#fff" fill-opacity=".12"/>
+      <path d="M9 9h6v14H9z" fill="#B8B0E3"/><path d="M17 9h6v6h-6z" fill="#F4C95D"/><path d="M17 17h6v6h-6z" fill="#A9C9E8"/>
+    </svg>
+    <div class="brand-text"><span class="brand-name">Underwriter Exception Copilot</span><span class="brand-sub">MPL Underwriting · Exception review</span></div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button class="tab active" role="tab" data-view="workspace" aria-selected="true">Workspace</button>
+    <button class="tab" role="tab" data-view="governance" aria-selected="false">Governance</button>
+  </nav>
+  <div class="controls">
+    <label class="ctl"><span>Reviewer</span><input id="reviewer" value="uw.demo" spellcheck="false"></label>
+    <label class="ctl"><span>Role</span><select id="role"><option value="underwriter">Underwriter</option><option value="senior_underwriter">Senior underwriter</option></select></label>
+    <label class="ctl"><span>Generation</span><select id="mode"><option value="auto">Auto</option><option value="live">Live DeepSeek</option><option value="cached">Cached</option></select></label>
+    <div class="llm-status" id="llm-status"><span class="dot"></span><span class="txt">Checking…</span></div>
+  </div>
+</header>
+
+<main>
+  <section id="view-workspace" class="view active">
+    <div class="ws">
+      <aside class="pane pane-queue">
+        <div class="pane-head"><h2 class="section-title">Exception queue</h2><span class="muted small" id="queue-count"></span></div>
+        <div id="queue" class="queue"></div>
+      </aside>
+      <section class="pane pane-center" id="center"></section>
+      <aside class="pane pane-right" id="right"></aside>
+    </div>
+  </section>
+  <section id="view-governance" class="view"></section>
+</main>
+
+<div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+<aside class="drawer" id="drawer" aria-hidden="true" role="dialog" aria-label="Source document"></aside>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="/static/app.js"></script>
+<script src="/static/governance.js" defer></script>
+</body>
+</html>

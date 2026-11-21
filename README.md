@@ -36,7 +36,7 @@ A prototype that helps a medical professional liability (MPL) underwriter work t
 ```bash
 pip install -r requirements.txt
 export DEEPSEEK_API_KEY=...          # optional; without it the app uses the cached briefs
-streamlit run app.py
+uvicorn web.api:app --port 8000   # then open http://localhost:8000
 python -m evals.run_evals            # --mode cached|live|auto  --db path
 pytest -q
 ```
@@ -87,7 +87,8 @@ uec/            backend: detector, retriever, llm, validator, policy, service, d
 cache/          cached LLM briefs (SUB-1042/1043/1044)
 evals/          golden_dataset.json, run_evals.py
 tests/          pytest suite (offline, cached mode)
-app.py          Streamlit UI
+web/api.py      FastAPI backend (policy gate returns 403)
+web/static/     Web UI (Workspace + Governance)
 ```
 
 ## Production path (documented, not built)

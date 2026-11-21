@@ -1,0 +1,125 @@
+"""FastAPI layer over uec.service. The policy gate lives in the backend: the API returns 403 on violations."""
+from __future__ import annotations
+import json, os, sqlite3, threading
+from pathlib import Path
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
+from uec import db, service, policy, llm
+
+STATIC = Path(__file__).parent / "static"
+app = FastAPI(title="Underwriter Exception Copilot", version="1.0")
+_lock = threading.Lock()
+
+
+def conn():
+    c = sqlite3.connect(db.DB_PATH, check_same_thread=False)
+    c.row_factory = sqlite3.Row
+    db.init_db(c)
+    return c
+
+
+class BriefReq(BaseModel):
+    mode: str = "auto"
+
+class EditReq(BaseModel):
+    edited: dict
+    reviewer_id: str
+    reason: str = ""
+
+class DecisionReq(BaseModel):
+    action: str
+    rationale: str
+    reviewer_id: str
+    reviewer_role: str = "underwriter"
+    presented_rule_versions: dict | None = None
+
+class EvalReq(BaseModel):
+    mode: str = "cached"
+
+
+@app.get("/api/status")
+def status():
+    pb = policy.load_playbook()
+    return {"llm_available": llm.llm_available(), "model": os.environ.get("DEEPSEEK_MODEL", "deepseek-chat"),
+            "prompt_version": llm.PROMPT_VERSION, "playbook_version": pb.get("playbook_version"),
+            "playbook_label": pb.get("label"), "data": "100% synthetic"}
+
+
+@app.get("/api/queue")
+def queue():
+    with _lock:
+        return service.list_queue(conn())
+
+
+@app.get("/api/cases/{sid}")
+def case(sid: str, role: str = "underwriter"):
+    with _lock:
+        try:
+            return json.loads(json.dumps(service.open_case(conn(), sid, role), default=str))
+        except KeyError:
+            raise HTTPException(404, f"Unknown submission {sid}")
+
+
+@app.post("/api/cases/{sid}/brief")
+def brief(sid: str, req: BriefReq):
+    if req.mode not in ("auto", "live", "cached"):
+        raise HTTPException(422, "mode must be auto|live|cached")
+    with _lock:
+        try:
+            return service.generate_brief(conn(), sid, mode=req.mode)
+        except (RuntimeError, FileNotFoundError) as e:
+            raise HTTPException(503, str(e))
+
+
+@app.post("/api/cases/{sid}/brief/{brief_id}/edit")
+def edit(sid: str, brief_id: int, req: EditReq):
+    with _lock:
+        return {"edited_brief_id": service.save_edit(conn(), sid, brief_id, req.edited, req.reviewer_id, req.reason)}
+
+
+@app.post("/api/cases/{sid}/decision")
+def decision(sid: str, req: DecisionReq):
+    with _lock:
+        try:
+            did = service.record_decision(conn(), sid, req.action, req.rationale, req.reviewer_id,
+                                          req.reviewer_role, req.presented_rule_versions)
+        except policy.PolicyViolation as e:
+            return JSONResponse(status_code=403, content={"error": "policy_violation", "reason": e.reason})
+        except ValueError as e:
+            return JSONResponse(status_code=422, content={"error": "invalid", "reason": str(e)})
+    return {"decision_id": did}
+
+
+@app.get("/api/playbook")
+def playbook():
+    return policy.load_playbook()
+
+
+@app.get("/api/evals/latest")
+def evals_latest():
+    with _lock:
+        c = conn()
+        run = c.execute("SELECT * FROM evaluation_runs ORDER BY run_id DESC LIMIT 1").fetchone()
+        if not run:
+            return {"run": None, "results": [], "history": []}
+        res = [dict(r) for r in c.execute("SELECT * FROM evaluation_results WHERE run_id=?", (run["run_id"],))]
+        hist = [dict(r) for r in c.execute("SELECT * FROM evaluation_runs ORDER BY run_id DESC LIMIT 10")]
+        return {"run": dict(run), "results": res, "history": hist}
+
+
+@app.post("/api/evals/run")
+def evals_run(req: EvalReq):
+    from evals import run_evals
+    with _lock:
+        out = run_evals.run(req.mode, db.DB_PATH, verbose=False)
+    return json.loads(json.dumps(out, default=str))
+
+
+@app.get("/")
+def index():
+    return FileResponse(STATIC / "index.html")
+
+
+app.mount("/static", StaticFiles(directory=STATIC), name="static")
