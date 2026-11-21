@@ -103,7 +103,7 @@ def generate_brief(conn, sid, mode="auto", actor="system:llm"):
 
 def save_edit(conn, sid, brief_id, edited: dict, reviewer_id, reason=""):
     """Edits are stored as a NEW row; the generated original is never modified."""
-    parent = _brief_row(conn.execute("SELECT * FROM exception_briefs WHERE brief_id=?", (brief_id,)).fetchone())
+    parent = _brief_row(conn.execute("SELECT * FROM exception_briefs WHERE brief_id=? AND submission_id=?", (brief_id, sid)).fetchone())
     if parent is None:
         raise KeyError(brief_id)
     before = {k: parent[k] for k in ("known", "conflicts", "missing", "next_steps")}

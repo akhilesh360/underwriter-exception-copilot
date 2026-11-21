@@ -121,7 +121,7 @@ def generate(bundle: dict, exceptions: list[dict], rules: list[dict], mode: str 
         raw = _call_live(build_messages(bundle, exceptions, rules, feedback))
     except Exception as e:  # network/API failure
         if mode == "live":
-            raise
+            raise RuntimeError(f"Live API call failed ({type(e).__name__}: {e})") from e
         return _load_cached(sid, f"Live API call failed ({type(e).__name__}: {e}); fell back to cached output.")
     ts = _now()
     # Live outputs go to a separate log dir; they never overwrite the curated, reviewed fallback fixtures.

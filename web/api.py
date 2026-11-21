@@ -13,11 +13,23 @@ app = FastAPI(title="Underwriter Exception Copilot", version="1.0")
 _lock = threading.Lock()
 
 
+_conn = None
+ROLES = {"underwriter", "senior_underwriter"}
+
+
 def conn():
-    c = sqlite3.connect(db.DB_PATH, check_same_thread=False)
-    c.row_factory = sqlite3.Row
-    db.init_db(c)
-    return c
+    """One shared connection, always used under _lock (no per-request connection leak)."""
+    global _conn
+    if _conn is None:
+        _conn = sqlite3.connect(db.DB_PATH, check_same_thread=False)
+        _conn.row_factory = sqlite3.Row
+        db.init_db(_conn)
+    return _conn
+
+
+def _check_role(role):
+    if role not in ROLES:
+        raise HTTPException(422, f"Unknown reviewer role; expected one of {sorted(ROLES)}")
 
 
 class BriefReq(BaseModel):
@@ -55,6 +67,7 @@ def queue():
 
 @app.get("/api/cases/{sid}")
 def case(sid: str, role: str = "underwriter"):
+    _check_role(role)
     with _lock:
         try:
             return json.loads(json.dumps(service.open_case(conn(), sid, role), default=str))
@@ -69,22 +82,32 @@ def brief(sid: str, req: BriefReq):
     with _lock:
         try:
             return service.generate_brief(conn(), sid, mode=req.mode)
+        except KeyError:
+            raise HTTPException(404, f"Unknown submission {sid}")
         except (RuntimeError, FileNotFoundError) as e:
-            raise HTTPException(503, str(e))
+            import logging
+            logging.getLogger("uec").warning("LLM generation failed for %s: %s", sid, e)
+            raise HTTPException(503, "Live model generation unavailable. Retry, or use Cached mode (clearly labelled).")
 
 
 @app.post("/api/cases/{sid}/brief/{brief_id}/edit")
 def edit(sid: str, brief_id: int, req: EditReq):
     with _lock:
-        return {"edited_brief_id": service.save_edit(conn(), sid, brief_id, req.edited, req.reviewer_id, req.reason)}
+        try:
+            return {"edited_brief_id": service.save_edit(conn(), sid, brief_id, req.edited, req.reviewer_id, req.reason)}
+        except KeyError:
+            raise HTTPException(404, f"Unknown brief {brief_id} for submission {sid}")
 
 
 @app.post("/api/cases/{sid}/decision")
 def decision(sid: str, req: DecisionReq):
+    _check_role(req.reviewer_role)
     with _lock:
         try:
             did = service.record_decision(conn(), sid, req.action, req.rationale, req.reviewer_id,
                                           req.reviewer_role, req.presented_rule_versions)
+        except KeyError:
+            raise HTTPException(404, f"Unknown submission {sid}")
         except policy.PolicyViolation as e:
             return JSONResponse(status_code=403, content={"error": "policy_violation", "reason": e.reason})
         except ValueError as e:

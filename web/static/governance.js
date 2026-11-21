@@ -116,6 +116,7 @@
 
     if (!run) {
       body.innerHTML = h + '<div class="card gov-empty">No evaluation runs yet. Run the suite to populate the scorecard.</div>';
+      bindEvalRun(body, UEC);
       return;
     }
     var agg = aggregate(results);
@@ -191,6 +192,9 @@
       'Expand to a 30–50 scenario golden dataset curated with senior underwriters, with per-exception-type coverage, adversarial broker notes, and sign-off before any model or prompt promotion.</div></div></div>';
 
     body.innerHTML = h;
+    bindEvalRun(body, UEC);
+  }
+  function bindEvalRun(body, UEC) {
     body.querySelectorAll('[data-gov-run]').forEach(function (b) {
       b.addEventListener('click', async function () {
         var mode = b.getAttribute('data-gov-run');
