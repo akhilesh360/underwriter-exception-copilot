@@ -1,0 +1,17 @@
+{"playbook_version": "1.0", "label": "Synthetic demonstration playbook - not Indigo's manual", "rules": [
+ {"rule_id": "MPL-DEMO-001", "version": "1.0", "jurisdiction": "DEMO", "effective_date": "2026-01-01", "trigger": "MISSING_LOSS_HISTORY",
+  "title": "Missing loss history: request documentation", "required_evidence": ["submitted_loss_history"],
+  "permitted_actions": ["REQUEST_INFORMATION", "REFER"], "final_decision_allowed": false, "human_review_required": true, "escalation_required": false, "required_role": null},
+ {"rule_id": "MPL-DEMO-002", "version": "1.0", "jurisdiction": "DEMO", "effective_date": "2026-01-01", "trigger": "CLAIM_MISMATCH",
+  "title": "Claim mismatch: verify claim identity and history", "required_evidence": ["submitted_loss_history", "external_claim_record", "identity_verification"],
+  "permitted_actions": ["REQUEST_INFORMATION", "REFER"], "final_decision_allowed": false, "human_review_required": true, "escalation_required": false, "required_role": null},
+ {"rule_id": "MPL-DEMO-003", "version": "1.0", "jurisdiction": "DEMO", "effective_date": "2026-01-01", "trigger": "INCOMPLETE_PRACTICE_INFO",
+  "title": "Incomplete practice information: request details", "required_evidence": ["submitted_application"],
+  "permitted_actions": ["REQUEST_INFORMATION"], "final_decision_allowed": false, "human_review_required": true, "escalation_required": false, "required_role": null},
+ {"rule_id": "MPL-DEMO-004", "version": "1.0", "jurisdiction": "DEMO", "effective_date": "2026-01-01", "trigger": "CREDENTIAL_GAP",
+  "title": "Credential gap: refer for credential review", "required_evidence": ["credential_verified"],
+  "permitted_actions": ["REFER", "REQUEST_INFORMATION"], "final_decision_allowed": false, "human_review_required": true, "escalation_required": false, "required_role": null},
+ {"rule_id": "MPL-DEMO-005", "version": "1.0", "jurisdiction": "DEMO", "effective_date": "2026-01-01", "trigger": "MANDATORY_REVIEW",
+  "title": "Mandatory review: escalate to senior underwriter", "required_evidence": ["external_claim_record"],
+  "permitted_actions": ["ESCALATE", "REFER"], "final_decision_allowed": false, "human_review_required": true, "escalation_required": true, "required_role": "senior_underwriter"}
+]}

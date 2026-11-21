@@ -1,0 +1,6 @@
+{
+  "raw_text": "{\"submission_id\": \"SUB-1044\", \"known\": [{\"fact\": \"Broker application states practice location was not provided.\", \"evidence_ids\": [\"DOC-21-P1\"], \"quote\": \"Practice location: not provided.\"}, {\"fact\": \"Credential status is PENDING VERIFICATION.\", \"evidence_ids\": [\"DOC-23-P1\"], \"quote\": \"status PENDING VERIFICATION\"}], \"conflicts\": [], \"missing\": [{\"field\": \"loss_history\", \"reason\": \"No loss history section or passage was provided.\"}, {\"field\": \"practice_location\", \"reason\": \"Practice location is not provided in the application.\"}, {\"field\": \"credential_verification\", \"reason\": \"License verification is pending; no verification date available.\"}], \"next_steps\": [{\"action\": \"REQUEST_INFORMATION\", \"reason\": \"Request loss history, practice location, and completed credential verification.\"}], \"human_review_required\": true}",
+  "model_version": "deepseek-chat (seed fixture)",
+  "prompt_version": "brief-v1.0",
+  "cached_at": "2026-11-20T12:00:00+00:00"
+}
