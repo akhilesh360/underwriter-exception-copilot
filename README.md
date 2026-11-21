@@ -6,7 +6,7 @@ https://github.com/user-attachments/assets/49daf3bc-199a-4b6d-9e18-e3a28fcbd956
 
 
 
-**▶ [2-minute demo](docs/demo.mp4)** (real app screens, captioned): architecture, rule detection, a live Copilot AI brief, citation verification, the playbook gate and backend 403, the human decision, a prompt-injection case, evals and the audit trail.
+**▶ 2-minute demo** (real app screens, captioned): architecture, rule detection, a live Copilot AI brief, citation verification, the playbook gate and backend 403, the human decision, a prompt-injection case, evals and the audit trail.
 
 ## How it works
 
