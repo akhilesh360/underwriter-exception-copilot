@@ -31,7 +31,17 @@ A prototype that helps a medical professional liability (MPL) underwriter work t
   - **raw**: the model output as generated, before validation. Informational only.
   - **validated**: what the system actually shows or allows. These are **blocking 100% gates**.
 
-## Quickstart
+## Run locally (one command)
+
+1. Install Python 3.11+ (https://www.python.org/downloads/).
+2. Copy `.env.example` to `.env` and paste your DeepSeek key (optional; without it the app uses clearly labelled cached briefs).
+3. Start it:
+   - macOS / Linux: `./run.sh`
+   - Windows: double-click `run.bat`
+
+The browser opens at http://localhost:8000.
+
+## Quickstart (manual)
 
 ```bash
 pip install -r requirements.txt
