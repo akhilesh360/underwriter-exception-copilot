@@ -1,7 +1,10 @@
 # Underwriter Exception Copilot: evidence-backed briefs for flagged MPL submissions, with the human in charge
 
-<!-- DEMO_VIDEO -->
-[![Demo preview: click to play the full 2-minute video](docs/demo.gif)](docs/demo.mp4)
+
+
+https://github.com/user-attachments/assets/49daf3bc-199a-4b6d-9e18-e3a28fcbd956
+
+
 
 **▶ [2-minute demo](docs/demo.mp4)** (real app screens, captioned): architecture, rule detection, a live Copilot AI brief, citation verification, the playbook gate and backend 403, the human decision, a prompt-injection case, evals and the audit trail.
 
