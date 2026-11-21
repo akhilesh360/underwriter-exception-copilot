@@ -64,7 +64,7 @@ SCENES = [
     ("audit", "AUDIT", "Original AI draft vs human edit",
      "A field-level diff of the AI draft against the human edit, plus the append-only event log: generation, block, decision, edit.", 1.4),
     ("close", "SUMMARY", "Underwriter Exception Copilot",
-     "Synthetic data only. Pilot hypothesis: cut exception research time by 30% without degrading decision quality.", 1),
+     "Synthetic data only. Rules detect, Copilot AI drafts, the validator checks, the playbook governs and the human decides.", 1),
 ]
 
 
@@ -203,7 +203,7 @@ def render_card(work):
     <div style="font-size:84px;font-weight:800;margin:20px 0 34px">Underwriter Exception Copilot</div>
     <div style="font-size:34px;color:#e2e8f0">Rules detect · Copilot AI drafts · Validator checks · Playbook governs · Human decides · Audit + evals measure</div>
     <div style="width:120px;height:4px;background:#7c5cd6;margin:46px 0"></div>
-    <div style="font-size:28px;color:#94a3b8">Synthetic data · Pilot hypothesis: −30% research time without degrading decision quality</div>
+    <div style="font-size:28px;color:#94a3b8">All data synthetic</div>
     </body></html>"""
     with sync_playwright() as p:
         b = p.chromium.launch(executable_path=CHROME)
@@ -237,7 +237,7 @@ def strip(work, i, n, section, title, caption):
 
 def edit(work, ff):
     marks = json.loads((work / "marks.json").read_text())
-    if not (work / "endcard.png").exists(): render_card(work)
+    render_card(work)  # always re-render so text edits apply
     arch = ROOT / "docs" / "architecture.png"
     run = lambda *a: subprocess.run([ff, "-loglevel", "error", "-y", *a], check=True)
     keys = [s[0] for s in SCENES]
