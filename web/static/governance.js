@@ -106,13 +106,13 @@
       '<button class="btn btn-secondary" data-gov-run="cached"' + (gs.running ? ' disabled' : '') + '>' +
       (gs.running === 'cached' ? '<span class="gov-spin"></span>Running…' : 'Run evals · Cached') + '</button>' +
       '<button class="btn btn-primary" data-gov-run="live"' + (gs.running ? ' disabled' : '') + '>' +
-      (gs.running === 'live' ? '<span class="gov-spin"></span>Running live (~60s)…' : 'Run evals · Live DeepSeek') + '</button></div>';
+      (gs.running === 'live' ? '<span class="gov-spin"></span>Running live (~60s)…' : 'Run evals · Live AI') + '</button></div>';
 
     var h = sectionHead('Evaluation scorecard',
       'Golden-scenario regression suite gating every model, prompt and rule change. ' +
       '<span class="gov-tag">Synthetic evaluation — not a production certification</span>', btns);
     if (gs.evalError) h += '<div class="gov-alert gov-alert-danger">' + esc(gs.evalError) + '</div>';
-    if (gs.running === 'live') h += '<div class="gov-alert gov-alert-info"><span class="gov-spin gov-spin-dark"></span>Executing 8 scenarios against the live DeepSeek model. This typically takes about a minute.</div>';
+    if (gs.running === 'live') h += '<div class="gov-alert gov-alert-info"><span class="gov-spin gov-spin-dark"></span>Executing 8 scenarios against the live AI model. This typically takes about a minute.</div>';
 
     if (!run) {
       body.innerHTML = h + '<div class="card gov-empty">No evaluation runs yet. Run the suite to populate the scorecard.</div>';

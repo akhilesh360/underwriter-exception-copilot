@@ -3,7 +3,9 @@
   "use strict";
 
   const $ = (s, r = document) => r.querySelector(s);
-  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  // Vendor-neutral display: the underlying model id stays in the DB/audit, the UI shows a product label.
+  const AI_LABEL = "Copilot AI";
+  const esc = (s) => String(s == null ? "" : s).replace(/deepseek[\w.-]*/gi, AI_LABEL).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   async function api(path, opts = {}) {
     const init = { method: opts.method || (opts.body !== undefined ? "POST" : "GET"), headers: {} };
@@ -52,7 +54,7 @@
     const r = await api("/api/status");
     const el = $("#llm-status");
     state.status = r.data;
-    if (r.ok && r.data.llm_available) { el.className = "llm-status ok"; $(".txt", el).textContent = "DeepSeek live"; el.title = `${r.data.model} · prompt ${r.data.prompt_version}`; }
+    if (r.ok && r.data.llm_available) { el.className = "llm-status ok"; $(".txt", el).textContent = "AI live"; el.title = `prompt ${r.data.prompt_version}`; }
     else { el.className = "llm-status off"; $(".txt", el).textContent = "Offline – cached only"; }
   }
   async function loadQueue() {
