@@ -24,7 +24,7 @@
   .eyebrow{font-size:17px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--purple)}
   .headline{font-size:58px;line-height:1.08;font-weight:800;color:var(--header);margin:14px 0 0;letter-spacing:-.01em;max-width:1350px}
   .sub{font-size:25px;line-height:1.4;color:var(--muted);margin:18px 0 0;max-width:1250px}
-  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-size:16px;color:var(--muted)}
+  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;font-size:15px;color:var(--muted)}
   .foot a{color:var(--primary);font-weight:700;text-decoration:none}
 
   /* slide 1 */
@@ -84,21 +84,21 @@
   <section class="slide active">
     <div class="eyebrow">Underwriter Exception Copilot</div>
     <div class="headline">Underwriters should spend their time judging risk, <span style="background:linear-gradient(transparent 62%,var(--yellow) 62%)">not hunting for evidence.</span></div>
-    <div class="sub">An AI copilot that assembles and verifies the evidence on every flagged submission, so the underwriter makes a faster, defensible decision, without handing the decision to the AI.</div>
+    <div class="sub">Lux already clears the straightforward submissions. This copilot works on the ones it hands to a human: it assembles and verifies the evidence so the underwriter makes a faster, defensible decision, without handing the decision to the AI.</div>
     <div class="big3">
-      <div class="card" style="--c:var(--purple)"><div class="lbl">The problem</div><div class="val">Exceptions stall in research</div><div class="txt">Applications, claims and credentials checked by hand, case by case.</div></div>
+      <div class="card" style="--c:var(--purple)"><div class="lbl">The problem</div><div class="val">Exceptions land on a small team</div><div class="txt">Lux fully automates 1 in 5 submissions (Nov 2025); the rest reach a five-person underwriting team. Industry-wide, about 40% of underwriter time goes to data gathering and admin.<sup>1</sup></div></div>
       <div class="card" style="--c:var(--primary)"><div class="lbl">The bet</div><div class="val">Speed up the evidence, not the judgment</div><div class="txt">AI drafts a cited brief; the underwriter stays accountable for the call.</div></div>
       <div class="card" style="--c:var(--skydark)"><div class="lbl">Why it's safe</div><div class="val">Verified, governed, audited</div><div class="txt">Every fact traced to source. Playbook enforced in code. Every action logged.</div></div>
     </div>
     <div class="flow">
-      <div class="step">Rules flag<small>deterministic</small></div>
+      <div class="step">Exception flagged<small>handed to a human</small></div>
       <div class="step">Evidence assembled<small>from source</small></div>
       <div class="step ai">AI drafts brief<small>cited</small></div>
       <div class="step">Citations verified<small>before display</small></div>
       <div class="step">Playbook governs<small>enforced in code</small></div>
       <div class="step hu">Underwriter decides<small>audited</small></div>
     </div>
-    <div class="foot"><span>Working prototype · synthetic data · downstream of detection · never touches pricing</span><span>1 / 3</span></div>
+    <div class="foot"><span><sup>1</sup> Accenture &amp; The Institutes, 2021 P&amp;C Underwriting Survey (~40% of time on non-core and administrative tasks). Indigo figures: Indigo press release, Nov 2025. · Working prototype on synthetic data; never touches pricing.</span><span style="white-space:nowrap">1 / 3</span></div>
   </section>
 
   <!-- 2 · Proof -->
