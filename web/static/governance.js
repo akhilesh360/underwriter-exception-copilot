@@ -361,7 +361,7 @@
     if (!c) { body.innerHTML = '<div class="card gov-empty">Could not load case ' + esc(gs.caseId) + '.</div>'; return; }
     var g = c.generated_brief, e = c.edited_brief;
     var h = sectionHead('Audit trail · ' + gs.caseId, 'Who changed what, when, and why — original AI output is never overwritten.',
-      '<span class="gov-lock">&#128274; Audit log is append-only (enforced by database triggers)</span>');
+      '<span class="gov-lock">&#2F6FA8; Audit log is append-only (enforced by database triggers)</span>');
 
     // Draft vs edit
     h += '<div class="card gov-card"><div class="card-header gov-card-h"><span class="section-title">Original AI draft vs human-edited version</span>' +
