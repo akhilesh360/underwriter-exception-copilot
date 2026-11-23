@@ -22,7 +22,7 @@
   .slide.active{display:flex}
   .slide::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:linear-gradient(var(--primary),var(--purple) 60%,var(--lav))}
   .eyebrow{font-size:17px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--purple)}
-  .headline{font-size:58px;line-height:1.08;font-weight:800;color:var(--header);margin:14px 0 0;letter-spacing:-.01em;max-width:1350px}
+  .headline{font-size:54px;line-height:1.08;font-weight:800;color:var(--header);margin:14px 0 0;letter-spacing:-.01em;max-width:1350px}
   .sub{font-size:25px;line-height:1.4;color:var(--muted);margin:18px 0 0;max-width:1250px}
   .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;font-size:15px;color:var(--muted)}
   .foot a{color:var(--primary);font-weight:700;text-decoration:none}
@@ -82,13 +82,13 @@
 
   <!-- 1 · The idea -->
   <section class="slide active">
-    <div class="eyebrow">Underwriter Exception Copilot</div>
-    <div class="headline">Underwriters should spend their time judging risk, <span style="background:linear-gradient(transparent 62%,var(--yellow) 62%)">not hunting for evidence.</span></div>
-    <div class="sub">Lux already clears the straightforward submissions. This copilot works on the ones it hands to a human: it assembles and verifies the evidence so the underwriter makes a faster, defensible decision, without handing the decision to the AI.</div>
+    <div class="eyebrow">AI copilot for medical malpractice underwriting</div>
+    <div class="headline">Underwriter Exception Copilot</div>
+    <div class="sub">Lux already decides the straightforward submissions. This copilot handles the rest: it assembles and verifies the evidence so the underwriter decides faster, and the decision stays human.</div>
     <div class="big3">
-      <div class="card" style="--c:var(--purple)"><div class="lbl">The problem</div><div class="val">The other 60% still need a human</div><div class="txt">Lux now makes automated decisions on 40% of submissions.<sup>1</sup> The rest go to underwriters, and industry-wide more than a third of underwriter time still goes to data gathering and admin.<sup>2</sup></div></div>
+      <div class="card" style="--c:var(--purple)"><div class="lbl">The problem</div><div class="val">The other 60% still need a human</div><div class="txt">Lux decides 40% of submissions automatically.<sup>1</sup> Industry-wide, underwriters spend over a third of their time gathering data.<sup>2</sup></div></div>
       <div class="card" style="--c:var(--primary)"><div class="lbl">The bet</div><div class="val">Speed up the evidence, not the judgment</div><div class="txt">AI drafts a cited brief; the underwriter stays accountable for the call.</div></div>
-      <div class="card" style="--c:var(--skydark)"><div class="lbl">Why it's safe</div><div class="val">The underwriter sees why</div><div class="txt">Every fact traced to its source, every blocked action explained. Playbook enforced in code; every action logged.</div></div>
+      <div class="card" style="--c:var(--skydark)"><div class="lbl">Why it's safe</div><div class="val">The underwriter sees why</div><div class="txt">Every fact links to its source. Every blocked action is explained. Everything is logged.</div></div>
     </div>
     <div class="flow">
       <div class="step"><div class="n">1</div><div class="t">Lux hands off</div><div class="d">not auto-decided</div></div>
@@ -104,10 +104,10 @@
   <!-- 2 · Proof -->
   <section class="slide">
     <div class="eyebrow">Working prototype</div>
-    <div class="headline" style="font-size:52px">From flagged case to defensible decision, in one screen.</div>
+    <div class="headline">From flagged case to defensible decision, in one screen.</div>
     <div class="s2">
       <div class="video">
-        <video id="demo" controls preload="metadata" playsinline poster="architecture.png">
+        <video id="demo" controls preload="metadata" playsinline poster="deck-poster.jpg">
           <source src="demo.mp4" type="video/mp4">
           <source src="https://raw.githubusercontent.com/akhilesh360/underwriter-exception-copilot/main/docs/demo.mp4" type="video/mp4">
         </video>
@@ -127,7 +127,7 @@
   <!-- 3 · 30-60-90 -->
   <section class="slide">
     <div class="eyebrow">First 90 days</div>
-    <div class="headline" style="font-size:52px">Validate the bottleneck before building the product.</div>
+    <div class="headline">Validate the bottleneck before building the product.</div>
     <div class="plan">
       <div class="ph" style="--c:var(--purple)">
         <div class="d">Days 1–30 · Learn</div><div class="o">Find where the time really goes</div>
