@@ -28,18 +28,19 @@
   .foot a{color:var(--primary);font-weight:700;text-decoration:none}
 
   /* slide 1 */
-  .big3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:46px}
-  .card{border-top:5px solid var(--c);background:var(--lav50);border-radius:0 0 14px 14px;padding:26px 28px 28px}
+  .big3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:34px}
+  .card{border-top:5px solid var(--c);background:var(--lav50);border-radius:0 0 14px 14px;padding:22px 26px 22px}
   .card .lbl{font-size:15px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--c)}
   .card .val{font-size:30px;font-weight:800;line-height:1.15;color:var(--header);margin-top:10px}
   .card .txt{font-size:19px;line-height:1.4;color:var(--muted);margin-top:10px}
-  .flow{margin-top:40px;display:flex;align-items:center}
-  .step{flex:1;text-align:center;font-size:18px;font-weight:700;color:var(--header);padding:14px 6px;border:1px solid var(--line);background:#fff}
-  .step:first-child{border-radius:999px 0 0 999px} .step:last-child{border-radius:0 999px 999px 0}
-  .step small{display:block;font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.04em;margin-top:2px}
-  .step.ai{background:var(--primary);color:#fff;border-color:var(--primary)} .step.ai small{color:#d9d3f5}
-  .step.hu{background:var(--purple);color:#fff;border-color:var(--purple)} .step.hu small{color:#d9d3f5}
-
+  .flow{margin-top:28px;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+  .step{position:relative;background:#fff;border:1px solid var(--line);border-top:4px solid var(--o);border-radius:12px;padding:12px 14px 14px;text-align:left}
+  .step:not(:last-child)::after{content:"";position:absolute;right:-12px;top:50%;width:10px;height:10px;border-top:2.5px solid var(--lav);border-right:2.5px solid var(--lav);transform:translate(0,-50%) rotate(45deg)}
+  .step .own{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--o)}
+  .step .t{font-size:18.5px;font-weight:800;color:var(--header);margin-top:4px;line-height:1.15}
+  .step .d{font-size:14px;color:var(--muted);margin-top:3px}
+  .legend{display:flex;gap:22px;margin:12px 0 18px;font-size:14px;color:var(--muted)}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--o);margin-right:7px;vertical-align:0}
   /* slide 2 */
   .s2{display:grid;grid-template-columns:1fr 360px;gap:40px;margin-top:30px;flex:1;min-height:0;margin-bottom:22px}
   .video{background:#0f172a;border-radius:14px;overflow:hidden;display:flex}
@@ -91,13 +92,14 @@
       <div class="card" style="--c:var(--skydark)"><div class="lbl">Why it's safe</div><div class="val">The underwriter sees why</div><div class="txt">Every fact traced to its source, every blocked action explained. Playbook enforced in code; every action logged.</div></div>
     </div>
     <div class="flow">
-      <div class="step">Lux hands off<small>not auto-decided</small></div>
-      <div class="step">Evidence assembled<small>from source</small></div>
-      <div class="step ai">AI drafts brief<small>cited</small></div>
-      <div class="step">Citations verified<small>before display</small></div>
-      <div class="step">Playbook governs<small>enforced in code</small></div>
-      <div class="step hu">Underwriter decides<small>audited</small></div>
+      <div class="step" style="--o:var(--muted)"><span class="own">Lux</span><div class="t">Hands off</div><div class="d">not auto-decided</div></div>
+      <div class="step" style="--o:var(--skydark)"><span class="own">Code</span><div class="t">Evidence assembled</div><div class="d">from source records</div></div>
+      <div class="step" style="--o:var(--primary)"><span class="own">AI</span><div class="t">Drafts the brief</div><div class="d">every fact cited</div></div>
+      <div class="step" style="--o:var(--skydark)"><span class="own">Code</span><div class="t">Citations verified</div><div class="d">before display</div></div>
+      <div class="step" style="--o:var(--skydark)"><span class="own">Code</span><div class="t">Playbook governs</div><div class="d">enforced in backend</div></div>
+      <div class="step" style="--o:var(--purple)"><span class="own">Human</span><div class="t">Underwriter decides</div><div class="d">rationale audited</div></div>
     </div>
+    <div class="legend"><span style="--o:var(--muted)"><i></i>Lux (existing)</span><span style="--o:var(--skydark)"><i></i>Deterministic code</span><span style="--o:var(--primary)"><i></i>AI drafts only</span><span style="--o:var(--purple)"><i></i>Human decides</span></div>
     <div class="foot"><span><sup>1</sup> Indigo, Business Wire, Sept 2026. <sup>2</sup> Accenture underwriting research, 2024 (2021 survey with The Institutes: ~40%). · Working prototype on synthetic data; never touches pricing.</span><span style="white-space:nowrap">1 / 3</span></div>
   </section>
 
