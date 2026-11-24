@@ -4,3 +4,4 @@ __pycache__/
 .pytest_cache/
 cache/live/
 *.zip
+SPEAKER_NOTES.md
