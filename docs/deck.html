@@ -80,6 +80,19 @@
   .ask{margin-top:20px;background:var(--primary);color:#fff;border-radius:14px;padding:18px 26px;font-size:23px;font-weight:700;display:flex;gap:16px;align-items:center}
   .ask span{font-size:15px;font-weight:800;letter-spacing:.16em;color:var(--lav);text-transform:uppercase;white-space:nowrap}
 
+  /* appendix */
+  .src{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:36px;flex:1;margin-bottom:24px}
+  .scol{display:flex;flex-direction:column;gap:22px}
+  .scol .scard{flex:1}
+  .scard{background:var(--lav50);border-top:5px solid var(--c);border-radius:0 0 14px 14px;padding:24px 28px}
+  .scard .k{font-size:14px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--c)}
+  .scard .t{font-size:26px;font-weight:800;color:var(--header);margin-top:6px}
+  .scard .m{font-size:16px;color:var(--muted);margin-top:2px}
+  .scard ul{list-style:none;margin:16px 0 0;padding:0}
+  .scard li{display:flex;gap:14px;padding:9px 0;border-top:1px solid #DDD8F0;font-size:18.5px;line-height:1.35}
+  .scard li:first-child{border-top:0}
+  .scard .ts{flex:none;min-width:58px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums}
+  .scard a{color:var(--primary);font-weight:700;text-decoration:none;font-size:16px;display:inline-block;margin-top:14px}
   .nav{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:center;z-index:5}
   .nav button{border:0;background:rgba(255,255,255,.14);color:#fff;font:700 15px "Source Sans 3",sans-serif;border-radius:999px;padding:8px 16px;cursor:pointer}
   .nav button:hover{background:rgba(255,255,255,.26)}
@@ -166,6 +179,50 @@
     <div class="foot"><span></span><span>3 / 3</span></div>
   </section>
 
+
+  <!-- Appendix · Sources (backup, not presented) -->
+  <section class="slide">
+    <div class="eyebrow">Appendix · Sources</div>
+    <div class="headline">Every number, in Indigo’s own words.</div>
+    <div class="src">
+      <div class="scard" style="--c:var(--purple)">
+        <div class="k">Podcast</div>
+        <div class="t"><i>Care Shift</i> with Jared Kaplan</div>
+        <div class="m">CEO &amp; co-founder, Indigo · November 2026</div>
+        <ul>
+          <li><span class="ts">7:34</span><span>“We’re at 40% today, up from 20% at the end of last year.”</span></li>
+          <li><span class="ts">15:06</span><span>“I have five underwriters. We’ll do 12,000 submissions this year.”</span></li>
+          <li><span class="ts">15:15</span><span>“I don’t want 20 underwriters, ever.”</span></li>
+          <li><span class="ts">15:36</span><span>“…75% ish automated in the next, you know, two or three years.”</span></li>
+          <li><span class="ts">28:31</span><span>Lux is “also a workflow efficiency tool so that when things are not 100% straight through, we can very efficiently check red flags.”</span></li>
+        </ul>
+        <a href="https://www.getindigo.com/news/care-shift-jared-article-november-2026" target="_blank" rel="noopener">getindigo.com/news →</a>
+      </div>
+      <div class="scol">
+      <div class="scard" style="--c:var(--skydark)">
+        <div class="k">Press release</div>
+        <div class="t">Indigo surpasses $20M in premiums</div>
+        <div class="m">Indigo · September 2026</div>
+        <ul>
+          <li><span class="ts">40%</span><span>of submissions now receiving automated decisions.</span></li>
+          <li><span class="ts">$20M+</span><span>in premiums, doubling volume since the Series B.</span></li>
+        </ul>
+        <a href="https://www.getindigo.com/news/businesswire-indigo-article-september-2026" target="_blank" rel="noopener">getindigo.com/news →</a>
+      </div>
+      <div class="scard" style="--c:var(--primary)">
+        <div class="k">Press release</div>
+        <div class="t">20% of submissions fully underwritten by AI</div>
+        <div class="m">Indigo · November 2025</div>
+        <ul>
+          <li><span class="ts">20%</span><span>of submissions underwritten by Lux with no human involvement.</span></li>
+          <li><span class="ts">2026</span><span>Goal: a majority of submissions underwritten in real time.</span></li>
+        </ul>
+        <a href="https://www.businesswire.com/news/home/20251103937974/en/Indigo-Reaches-Milestone-20-of-Submissions-Now-Fully-Underwritten-by-AI" target="_blank" rel="noopener">businesswire.com →</a>
+      </div>
+      </div>
+    </div>
+    <div class="foot"><span>Backup slide: quotes from the episode transcript; figures as published by Indigo.</span><span style="white-space:nowrap">A</span></div>
+  </section>
 </div></div>
 
 <div class="nav"><button id="prev" aria-label="Previous slide">←</button><div class="dots" id="dots"></div><button id="next" aria-label="Next slide">→</button></div>
