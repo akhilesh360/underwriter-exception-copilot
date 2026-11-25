@@ -6,3 +6,5 @@ cache/live/
 *.zip
 SPEAKER_NOTES.md
 speaker-notes.html
+*.pptx
+*.pdf
